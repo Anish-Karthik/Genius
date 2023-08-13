@@ -1,17 +1,11 @@
 "use client"
-
 import { Montserrat } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import { usePathname } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 import { LayoutDashboardIcon, MessageSquareIcon, ImageIcon, VideoIcon, MusicIcon, CodeIcon, SettingsIcon } from "lucide-react"
-
-const montserrat = Montserrat({
-  weight: "600",
-  subsets: ["latin"]
-});
 
 const routes = [
   {
@@ -48,7 +42,7 @@ const routes = [
     label: 'Code Generation',
     icon: CodeIcon,
     href: '/code',
-    color: "text-green-500",
+    color: "text-green-700",
   },
   {
     label: 'Settings',
@@ -56,9 +50,18 @@ const routes = [
     href: '/settings',
     color: "text-white-500",
   },
-]
+];
+
+
+const montserrat = Montserrat({
+  weight: "600",
+  subsets: ["latin"]
+});
+
+
 
 const Sidebar = () => {
+  const pathname = usePathname();
   return (
     <div className='space-y-4 py-4 flex flex-col h-full bg-[#111827] text-white'>
       <div className='px-3 py-2 flex-1'>
@@ -80,9 +83,8 @@ const Sidebar = () => {
             <Link
               key={route.label}
               href={route.href}
-              className={cn(
-                'text-sm group flex p-3 w-full justify-start cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition ',
-                montserrat.className,
+              className={cn('text-sm group flex p-3 w-full justify-start cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition', 
+              pathname === route.href ? 'bg-white/10 text-white' : 'text-zinc-400'
               )}
             >
               <div className='flex items-center flex-1'>
