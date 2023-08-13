@@ -1,31 +1,59 @@
 "use client"
-
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { MessageSquareIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
+import { cn } from '@/lib/utils'
 
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import Heading from '@/components/Heading'
-
 import { formSchema } from './constants'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { ChatCompletionRequestMessage } from 'openai'
+import { Empty } from '@/components/Empty'
+import { Loader } from '@/components/Loader'
+import { UserAvatar } from '@/components/UserAvatar'
+import { BotAvatar } from '@/components/BotAvatar'
+
 
 const ConversationPage = () => {
+  const router = useRouter()
+  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([])
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: '',
     },
   });
-  console.log(form)
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data)
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values)
+    try {
+      const userMessage: ChatCompletionRequestMessage = {
+        role: "user",
+        content: values.prompt,
+      }
+      const newMessages = [...messages, userMessage]
 
+      const response = await axios.post('/api/conversation', {
+        messages: newMessages,
+      })
+      setMessages((prev) => [...prev, userMessage ,response.data])
+      form.reset()
+    } catch (error) {
+      // TODO: OPEN PRO MODEL
+      console.error(error)
+    } finally {
+      router.refresh();
+    }
+  }
+  console.log(messages)
   return (
     <div>
       <Heading 
@@ -57,8 +85,30 @@ const ConversationPage = () => {
             </form>
           </Form>
         </div>
+
         <div className='mt-4 space-y-4'>
-          Messages
+          {isLoading && (
+            <div className='p-8 rounded-lg w-full flex items-center justify-center bg-muted'>
+              <Loader />
+            </div>
+          )}
+          {messages.length === 0 && !isLoading && (
+            <Empty label='No conversation started.' />
+          )}
+          <div className='flex flex-col-reverse gap-y-4'>
+            {messages.map((message, index) => (
+              <div key={index} 
+                className={cn(
+                  "p-8 w-full flex items-start gap-x-8 ", 
+                  message.role === 'user' ? 'bg-white border border-black/10 justify-end' : 'bg-muted justify-start'
+                )}
+              >
+                {message.role === 'assistant' ? <BotAvatar /> : null}
+                {message.content}
+                {message.role === 'user' ? <UserAvatar /> : null}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
