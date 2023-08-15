@@ -6,7 +6,11 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import Sidebar from './Sidebar'
 
-const MobileSidebar = () => {
+interface MobileSidebarProps {
+  apiLimitCount: number
+}
+
+const MobileSidebar = ({ apiLimitCount = 0 } : MobileSidebarProps) => {
   // fix hydration error
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => {
@@ -24,7 +28,7 @@ const MobileSidebar = () => {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className='p-0'>
-        <Sidebar />
+        <Sidebar apiLimitCount={apiLimitCount} />
       </SheetContent>
     </Sheet>
   )

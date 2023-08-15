@@ -13,7 +13,7 @@ const DashBoardLayout = async ({
   return (
     <div className='h-full relative'>
       {/* desktop view */}
-      <div className='hidden h-full md:flex md:flex-col md:fixed md:w-72 inset-y-0 z-[80] bg-gray-900' >
+      <div className='hidden h-full md:flex md:flex-col md:fixed md:w-72 inset-y-0 bg-gray-900' >
         <div>
           <Sidebar apiLimitCount={apiLimitCount} />
         </div>

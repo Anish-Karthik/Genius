@@ -20,9 +20,11 @@ import { BotAvatar } from '@/components/BotAvatar'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Card, CardFooter } from '@/components/ui/card'
 import Image from 'next/image'
+import { useProModal } from '@/hooks/use-pro-modal'
 
 
 const ImagePage = () => {
+  const proModal = useProModal();
   const router = useRouter()
   const [images, setImages] = useState<string[]>([])
 
@@ -44,8 +46,10 @@ const ImagePage = () => {
       const urls = response.data.map((image: {url: string}) => image.url)
       setImages(urls)
       form.reset()
-    } catch (error) {
-      // TODO: OPEN PRO MODEL
+    } catch (error: any) {
+      if(error?.response?.status === 403)  {
+        proModal.onOpen();
+      }
       console.error(error)
     } finally {
       router.refresh();

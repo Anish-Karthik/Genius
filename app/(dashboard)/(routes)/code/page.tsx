@@ -19,9 +19,11 @@ import { Empty } from '@/components/Empty'
 import { Loader } from '@/components/Loader'
 import { UserAvatar } from '@/components/UserAvatar'
 import { BotAvatar } from '@/components/BotAvatar'
+import { useProModal } from '@/hooks/use-pro-modal'
 
 
 const CodePage = () => {
+  const proModal = useProModal()
   const router = useRouter()
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([])
 
@@ -42,8 +44,10 @@ const CodePage = () => {
       const response = await axios.post('/api/code', { messages: newMessages })
       setMessages((prev) => [...prev, userMessage ,response.data])
       form.reset()
-    } catch (error) {
-      // TODO: OPEN PRO MODEL
+    } catch (error: any) {
+        if(error?.response?.status === 403)  {
+          proModal.onOpen();
+        }
       console.error(error)
     } finally {
       router.refresh();

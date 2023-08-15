@@ -14,9 +14,11 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Empty } from '@/components/Empty'
 import { Loader } from '@/components/Loader'
+import { useProModal } from '@/hooks/use-pro-modal'
 
 
 const MusicPage = () => {
+  const proModal = useProModal()
   const router = useRouter()
   const [music, setMusic] = useState<string>()
 
@@ -35,8 +37,10 @@ const MusicPage = () => {
       const response = await axios.post('/api/music', values)
       setMusic(response.data.audio)
       form.reset()
-    } catch (error) {
-      // TODO: OPEN PRO MODEL
+    } catch (error: any) {
+      if(error?.response?.status === 403)  {
+        proModal.onOpen();
+      }
       console.error(error)
     } finally {
       router.refresh();
