@@ -6,14 +6,12 @@ import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
-import { cn } from '@/lib/utils'
 
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import Heading from '@/components/Heading'
 import { formSchema } from './constants'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { ChatCompletionRequestMessage } from 'openai'
 import { Empty } from '@/components/Empty'
 import { Loader } from '@/components/Loader'
 
@@ -35,7 +33,7 @@ const MusicPage = () => {
     try {
       setMusic(undefined)
       const response = await axios.post('/api/music', values)
-      setMusic(response.data)
+      setMusic(response.data.audio)
       form.reset()
     } catch (error) {
       // TODO: OPEN PRO MODEL
