@@ -21,7 +21,7 @@ import { UserAvatar } from '@/components/UserAvatar'
 import { BotAvatar } from '@/components/BotAvatar'
 
 
-const ConversationPage = () => {
+const CodePage = () => {
   const router = useRouter()
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([])
 
@@ -71,12 +71,13 @@ const ConversationPage = () => {
                   <Input {...field} placeholder='Write an program to implement debounce in javascript.' 
                     className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
                     disabled={isLoading}
+                    autoComplete='off'
                   />
                   </FormControl>
                 </FormItem>
               )} />
               <Button type='submit' className='col-span-12 lg:col-span-2 w-full' disabled={isLoading}>
-                Ask
+                Generate
               </Button>
             </form>
           </Form>
@@ -122,4 +123,4 @@ const ConversationPage = () => {
   )
 }
 
-export default ConversationPage
+export default CodePage

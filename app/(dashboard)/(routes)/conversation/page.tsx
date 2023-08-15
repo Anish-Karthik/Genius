@@ -75,6 +75,7 @@ const ConversationPage = () => {
                   <Input {...field} placeholder='What are the best stocks to buy?' 
                     className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
                     disabled={isLoading}
+                    autoComplete='off'
                   />
                   </FormControl>
                 </FormItem>
