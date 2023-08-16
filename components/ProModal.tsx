@@ -7,6 +7,8 @@ import { ArrowRight, MessageSquareIcon, ImageIcon, VideoIcon, MusicIcon, CodeIco
 import { Card, CardContent } from './ui/card'
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 
 const tools = [
@@ -48,6 +50,21 @@ const tools = [
 ];
 export const ProModal = () => {
   const proModal = useProModal()
+  const router = useRouter()
+  const [loading, setLoading] = React.useState(false)
+
+  const onSubscribe = async () => {
+    try {
+      setLoading(true)
+      const response = await axios.get('/api/stripe')
+      window.location.href = (response.data.url)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <Dialog open={proModal.isOpen} onOpenChange={proModal.onClose}>
       <DialogContent>
@@ -61,6 +78,7 @@ export const ProModal = () => {
             </div>
           </DialogTitle>
           <DialogDescription className='text-center pt-2 space-y-2 text-zinc-900 font-medium'>
+            
             {tools.map((tool, index) => (
               <Card
                 key={tool.label}
@@ -86,6 +104,7 @@ export const ProModal = () => {
             size="lg"
             variant="premium"
             className="w-full"
+            onClick={onSubscribe}
           >
             Upgrade
             <ZapIcon className="w-4 h-4 ml-2 fill-white" />
