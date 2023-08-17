@@ -20,6 +20,7 @@ import { Loader } from '@/components/Loader'
 import { UserAvatar } from '@/components/UserAvatar'
 import { BotAvatar } from '@/components/BotAvatar'
 import { useProModal } from '@/hooks/use-pro-modal'
+import { toast } from 'react-hot-toast'
 
 
 const CodePage = () => {
@@ -47,8 +48,9 @@ const CodePage = () => {
     } catch (error: any) {
         if(error?.response?.status === 403)  {
           proModal.onOpen();
-        }
-      console.error(error)
+      } else {
+        toast.error(error?.response?.data?.message || 'Something went wrong')
+      }
     } finally {
       router.refresh();
     }
