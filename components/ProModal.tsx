@@ -57,7 +57,7 @@ export const ProModal = () => {
     try {
       setLoading(true)
       const response = await axios.get('/api/stripe')
-      window.location.href = (response.data.url)
+      router.push(response.data.url)
     } catch (error) {
       console.log(error)
     } finally {

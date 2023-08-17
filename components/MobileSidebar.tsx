@@ -7,10 +7,11 @@ import { Menu } from 'lucide-react'
 import Sidebar from './Sidebar'
 
 interface MobileSidebarProps {
-  apiLimitCount: number
+  apiLimitCount: number;
+  isPro: boolean;
 }
 
-const MobileSidebar = ({ apiLimitCount = 0 } : MobileSidebarProps) => {
+const MobileSidebar = ({ apiLimitCount = 0, isPro = false } : MobileSidebarProps) => {
   // fix hydration error
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => {
@@ -20,6 +21,7 @@ const MobileSidebar = ({ apiLimitCount = 0 } : MobileSidebarProps) => {
     return null;
   }
 
+
   return (
     <Sheet>
       <SheetTrigger>
@@ -28,7 +30,7 @@ const MobileSidebar = ({ apiLimitCount = 0 } : MobileSidebarProps) => {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className='p-0'>
-        <Sidebar apiLimitCount={apiLimitCount} />
+        <Sidebar apiLimitCount={apiLimitCount} isPro={isPro} />
       </SheetContent>
     </Sheet>
   )
