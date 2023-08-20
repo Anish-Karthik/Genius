@@ -27,6 +27,8 @@
   <li>Copy button for code</li>
   <li>Accept real payment</li>
   <li>Link Promptopia</li>
+  <li>Allow for free resets weekly</li>
+  <li>Add a way to get free Points by doing some activities</li>
 </ul>
 
 
