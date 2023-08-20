@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
-
 import prismadb from "./prismadb";
-import { MAX_FREE_COUNTS } from "@/constants";
+import { MAX_FREE_COUNTS, WEEK } from "@/constants";
+import { callAfterTimeout } from "./utils";
 
 export const increaseApiLimit =async () => {  
 
@@ -44,6 +44,7 @@ export const checkApiLimit = async ()=> {
 }
 
 export const getApiLimitCount = async () => {
+  resetFreeCounterAfterAWeek();
   const { userId } = auth();
 
   if (!userId) {
@@ -59,3 +60,21 @@ export const getApiLimitCount = async () => {
   }
   return userApiLimit.count;
 }
+
+export async function resetFreeCounter() {
+  const { userId } = auth();
+
+  if (!userId) {
+    return 0;
+  }
+  await prismadb.userApiLimit.update({
+    where: { userId },
+    data: { count: 0 },
+  });
+}
+
+export const resetFreeCounterAfterAWeek = callAfterTimeout(resetFreeCounter, WEEK)
+
+
+
+
