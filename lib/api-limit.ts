@@ -72,6 +72,9 @@ export async function resetFreeCounter() {
     data: { count: 0 },
   });
 }
+export function resetFreeCounterClient() {
+  resetFreeCounter();
+}
 
 export const resetFreeCounterAfterAWeek = callAfterTimeout(resetFreeCounter, WEEK)
 
