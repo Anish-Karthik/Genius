@@ -31,16 +31,14 @@ export function callAfterTimeout<T extends (...args: any[]) => any>(
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout> | null = null
-  console.log("callAfterTimeout")
   return (...args: Parameters<T>) => {
     if (timeout) {
-      console.log("timeout")
       return
     }
-    console.log("timeout null")
     timeout = setTimeout(() => {
       func(...args)
       timeout = null
     }, wait)
   }
 }
+

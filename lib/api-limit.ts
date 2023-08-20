@@ -1,7 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import prismadb from "./prismadb";
-import { MAX_FREE_COUNTS, WEEK } from "@/constants";
-import { callAfterTimeout } from "./utils";
+import { MAX_FREE_COUNTS } from "@/constants";
 
 export const increaseApiLimit =async () => {  
 
@@ -44,7 +43,6 @@ export const checkApiLimit = async ()=> {
 }
 
 export const getApiLimitCount = async () => {
-  resetFreeCounterAfterAWeek();
   const { userId } = auth();
 
   if (!userId) {
@@ -61,22 +59,50 @@ export const getApiLimitCount = async () => {
   return userApiLimit.count;
 }
 
-export async function resetFreeCounter() {
-  const { userId } = auth();
-
-  if (!userId) {
-    return 0;
-  }
-  await prismadb.userApiLimit.update({
-    where: { userId },
+export async function resetFreeCounters() {
+  await prismadb.userApiLimit.updateMany({
     data: { count: 0 },
   });
 }
-export function resetFreeCounterClient() {
-  resetFreeCounter();
+
+export async function updateDailyRewardsForAll() {
+  await prismadb.userApiLimit.updateMany({ 
+    data: { dailyReward: true },
+  });
 }
 
-export const resetFreeCounterAfterAWeek = callAfterTimeout(resetFreeCounter, WEEK)
+export async function checkDailyRewardAvailable() {
+  const { userId } = auth();
+
+  if (!userId) {
+    return false;
+  }
+
+  const userApiLimit = await prismadb.userApiLimit.findUnique({
+    where: { userId },
+  });
+
+  if (!userApiLimit) {
+    return false;
+  }
+
+  return userApiLimit.dailyReward;
+}
+
+export async function claimDailyReward() {
+  const { userId } = auth();
+
+  if (!userId) {
+    return false;
+  }
+
+  const userApiLimit = await prismadb.userApiLimit.update({
+    where: { userId },
+    data: { dailyReward: false },
+  });
+
+  return false;
+}
 
 
 
