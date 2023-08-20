@@ -1,3 +1,36 @@
+## Features:
+
+<ul>
+  <li>Tailwind design</li>
+  <li>Tailwind animations and effects</li>
+  <li>Full responsiveness</li>
+  <li>Clerk Authentication (Email, Google)</li>
+  <li>Client form validation and handling using react-hook-form</li>
+  <li>Server error handling using react-toast</li>
+  <li>Conversation Generation Tool (Open AI)</li>
+  <li>Image Generation Tool (Open AI)</li>
+  <li>Music Generation Tool (Replicate AI)</li>
+  <li>Video Generation Tool (Replicate AI)</li>
+  <li>Code Generation Tool (Open AI)</li>
+  <li>Page loading state</li>
+  <li>Stripe monthly subscription</li>
+  <li>Prisma for Database Management</li>
+  <li>MongoDB for data Storage</li>
+  <li>Free tier with API limiting</li>
+  <li>Folder structure in Next 13 App Router</li>
+</ul>
+
+## Improvements to be made
+<ul>
+  <li>Code Conversion AI</li>
+  <li>Store chats</li>
+  <li>Copy button for code</li>
+  <li>Accept real payment</li>
+  <li>Link Promptopia</li>
+</ul>
+
+
+
 ## Landing
 ![Screenshot 2023-08-17 211729](https://github.com/Anish-Karthik/Genius/assets/111771214/a1f0f7f1-41ff-4f4a-88d7-20454b48cf06)
 
@@ -42,12 +75,4 @@
 
 
 
-
-## Improvements to be made
-<ul>
-  <li>Store chats</li>
-  <li>Copy button for code</li>
-  <li>Accept real payment</li>
-  <li>Link Promptopia</li>
-</ul>
 
