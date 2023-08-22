@@ -17,7 +17,6 @@ export const ClaimPoint = ( {isDailyRewardAvailable} : ClaimPointProps ) => {
 
   useEffect(() => {
     setMounted(true);
-    toast.success(`${isDailyRewardAvailable} ${mounted} ${isClaimed}`);
     console.log(`${isDailyRewardAvailable} ${mounted} ${isClaimed}`);
   }, []);
 

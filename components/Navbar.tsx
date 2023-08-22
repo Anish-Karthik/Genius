@@ -1,7 +1,7 @@
 import React from 'react'
 import { UserButton } from '@clerk/nextjs'
 import MobileSidebar from './MobileSidebar'
-import {  getApiLimitCount } from '@/lib/api-limit'
+import { getApiLimitCount } from '@/lib/api-limit'
 import { ClaimPoint } from './ClaimPoint'
 import { checkSubscription } from '@/lib/subscription'
 import { checkDailyRewardAvailable } from '@/lib/rewards'
