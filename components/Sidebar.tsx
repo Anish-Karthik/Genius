@@ -5,53 +5,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
-import { LayoutDashboardIcon, MessageSquareIcon, ImageIcon, VideoIcon, MusicIcon, CodeIcon, SettingsIcon } from "lucide-react"
+import { routes } from '@/app/constants'
 import FreeCounter from './FreeCounter'
-
-const routes = [
-  {
-    label: 'Dashboard',
-    icon: LayoutDashboardIcon,
-    href: '/dashboard',
-    color: "text-sky-500",
-  },
-  {
-    label: 'Conversation',
-    icon: MessageSquareIcon,
-    href: '/conversation',
-    color: "text-violet-500",
-  },
-  {
-    label: 'Image Generation',
-    icon: ImageIcon,
-    href: '/image',
-    color: "text-pink-700",
-  },
-  {
-    label: 'Video Generation',
-    icon: VideoIcon,
-    href: '/video',
-    color: "text-orange-700",
-  },    
-  {
-    label: 'Music Generation',
-    icon: MusicIcon,
-    href: '/music',
-    color: "text-emerald-500",
-  },
-  {
-    label: 'Code Generation',
-    icon: CodeIcon,
-    href: '/code',
-    color: "text-green-700",
-  },
-  {
-    label: 'Settings',
-    icon: SettingsIcon,
-    href: '/settings',
-    color: "text-white-500",
-  },
-];
 
 
 const montserrat = Montserrat({

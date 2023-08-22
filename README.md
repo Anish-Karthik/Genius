@@ -20,16 +20,18 @@
   <li>Folder structure in Next 13 App Router</li>
 </ul>
 
-## New Improvements added
+## Extra Improvements added
 
 <ul>
-  <li>Allow for free resets weekly</li>
-  <li>Add a way to get free Points by doing some activities</li>
+  <li>Code Conversion AI (complete)</li>
+  <li>Allow for free resets weekly (partial) </li>
+  <li>Add a way to get free Points by doing some activities (partial) </li>
 </ul>
 
 ## Improvements to be made
+
 <ul>
-  <li>Code Conversion AI</li>
+  <li>Introduce Currency<li>
   <li>Store chats</li>
   <li>Copy button for code</li>
   <li>Accept real payment</li>

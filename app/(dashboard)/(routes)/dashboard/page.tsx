@@ -3,46 +3,10 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
-import { ArrowRight, MessageSquareIcon, ImageIcon, VideoIcon, MusicIcon, CodeIcon } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { routes } from '@/app/constants'
 
-
-const tools = [
-  {
-    label: "Conversation Tools",
-    icon: MessageSquareIcon,
-    color: "text-violet-500",
-    bgColor: "bg-violet-500/10",
-    href: "/conversation"
-  },
-  {
-    label: 'Image Generation',
-    icon: ImageIcon,
-    href: '/image',
-    color: "text-pink-700",
-    bgColor: "bg-pink-500/10",
-  },
-  {
-    label: 'Video Generation',
-    icon: VideoIcon,
-    href: '/video',
-    color: "text-orange-700",
-    bgColor: "bg-orange-500/10",
-  },    
-  {
-    label: 'Music Generation',
-    icon: MusicIcon,
-    href: '/music',
-    color: "text-emerald-500",
-    bgColor: "bg-emerald-500/10",
-  },
-  {
-    label: 'Code Generation',
-    icon: CodeIcon,
-    href: '/code',
-    color: "text-green-700",
-    bgColor: "bg-green-700/10",
-  },
-];
+const tools = routes;
 
 const DashboardPage = () => {
   const router = useRouter()
@@ -58,6 +22,7 @@ const DashboardPage = () => {
       </div>
       <div className='px-4 md:px-20 lg:px-32 space-y-4'>
         {tools.map((tool) => (
+          tool.label === 'Dashboard' || tool.label === 'Settings' ? null :
           <Card
           onClick={() => router.push(tool.href)}
           key={tool.href}
