@@ -59,50 +59,7 @@ export const getApiLimitCount = async () => {
   return userApiLimit.count;
 }
 
-export async function resetFreeCounters() {
-  await prismadb.userApiLimit.updateMany({
-    data: { count: 0 },
-  });
-}
 
-export async function updateDailyRewardsForAll() {
-  await prismadb.userApiLimit.updateMany({ 
-    data: { dailyReward: true },
-  });
-}
-
-export async function checkDailyRewardAvailable() {
-  const { userId } = auth();
-
-  if (!userId) {
-    return false;
-  }
-
-  const userApiLimit = await prismadb.userApiLimit.findUnique({
-    where: { userId },
-  });
-
-  if (!userApiLimit) {
-    return false;
-  }
-
-  return userApiLimit.dailyReward;
-}
-
-export async function claimDailyReward() {
-  const { userId } = auth();
-
-  if (!userId) {
-    return false;
-  }
-
-  const userApiLimit = await prismadb.userApiLimit.update({
-    where: { userId },
-    data: { dailyReward: false },
-  });
-
-  return false;
-}
 
 
 
