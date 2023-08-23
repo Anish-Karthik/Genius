@@ -4,6 +4,8 @@ import { Button } from './ui/button';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useAuth } from '@clerk/nextjs';
+import { checkDailyRewardAvailable, claimDailyReward } from '@/lib/rewards';
+import { set } from 'zod';
 
 interface ClaimPointProps {
   isDailyRewardAvailable: boolean;
@@ -13,27 +15,26 @@ interface ClaimPointProps {
 export const ClaimPoint = ( {isDailyRewardAvailable} : ClaimPointProps ) => {
   const [mounted, setMounted] = useState(false);
   const [isClaimed, setIsClaimed] = useState(!isDailyRewardAvailable);
-  const userId = useAuth();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
 
   if(!mounted || isClaimed) {
     return null;
   }
   async function onClaimDailyReward() {
     try {
-      const res = await axios.put('/api/rewards/claim-daily');
-      if(res.status === 200) {
+      if(await checkDailyRewardAvailable()) {
+        await claimDailyReward();
         setIsClaimed(true);
         toast.success("Daily reward claimed");
       } else {
-        toast.error("Failed to claim daily reward");
         setIsClaimed(true);
+        toast.error("Daily reward not available");
       }
     } catch (error) {
-      setIsClaimed(true);
       toast.error("Failed to claim daily reward. Internal server error");
     }
   }
